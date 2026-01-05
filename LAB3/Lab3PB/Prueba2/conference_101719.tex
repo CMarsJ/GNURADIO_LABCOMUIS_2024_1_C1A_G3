@@ -1,0 +1,511 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+% To load packages
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc} 
+\usepackage[spanish]{babel}
+\usepackage[left=2.0cm,top=2cm,right=2.0cm,bottom=4.0cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+\usepackage{listings}
+\usepackage{array}
+\usepackage{color,enumerate}	
+\usepackage{multirow} 
+\usepackage{multicol}
+\usepackage{authblk}
+\usepackage{charter}    % Font typeface
+\usepackage{titling}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{algorithmic}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{titlesec}
+
+
+
+\definecolor{uisgreen}{RGB}{125,194,3}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+
+\setlength{\droptitle}{-1.8cm}
+\pagestyle{fancy}
+
+%%% Header definition
+\headheight=60pt 						% header height 
+\renewcommand{\headrulewidth}{4pt}
+\let\oldheadrule\headrule% Copy \headrule into \oldheadrule
+\renewcommand{\headrule}{\color{uisgreen}\oldheadrule}
+
+\fancyhead[L]							% left header 
+{	\begin{minipage}{2.5cm}
+		\includegraphics[scale=0.3]{./figs/uislogohoriz.png} 
+	\end{minipage}	
+	\begin{minipage}{5cm}
+	    \color{uisgreen}
+	    \footnotesize {\textsf{Universidad Industrial de Santander\\ 
+				Escuela de Ingenierías Eléctrica, \\
+				Electrónica y de Telecomunicaciones	}}	
+	\end{minipage}
+}
+\fancyhead[R] { 							%la "C" indica al centro
+	\begin{minipage}{8cm}
+	    \color{uisgreen}
+	    \begin{flushright}
+    	    \small{\textsf{Laboratorio de COMUNICACIONES I (27139)}} \\
+            \normalsize{\textsf{\dochead: \textbf{\docsubhead}}} \\
+    	    \small{\textsf{Grupo: \textbf{\teamname}}}
+	    \end{flushright}
+    \end{minipage}
+    \begin{minipage}{1.2cm}
+		\includegraphics[width=1.0\textwidth]{./figs/logoE3T.png} 
+	\end{minipage}	
+}
+%%% End header definition
+
+% PASO 1. Reemplace "Práctica 1" por el número de la práctica que corresponda
+\newcommand{\dochead}{Práctica 3}     
+
+% PASO 2. Reemplace "TÍTULO PRÁCTICA" por el título de la práctica que corresponda.
+\newcommand{\docsubhead}{Modulaciones Lineales }  
+
+% PASO 3. Reemplace "B1A - 02" por el grupo de la asignatura y el número de su grupo de laboratorio
+\newcommand{\teamname}{C1A - 03}     
+
+% PASO 4. OPCIONAL: Reemplace "\docsubhead \docsubhead" por el título del documento en caso de requerirse.
+\newcommand{\titulo}{\dochead \\ \docsubhead}      
+
+% PASO 5. Reemplace "31 de diciembre de 2030" por la fecha de su documento
+\newcommand{\fecha}{17 de Marzo de 2024}      
+
+%Ajustes Personales
+
+\makeatletter
+\def\section{\@startsection{section}{1}{\z@}{1.5ex plus 1.5ex minus 0.5ex}{1.5ex plus 0.5ex minus 0.5ex}{\normalfont\normalsize\bfseries\raggedright}}
+\renewcommand\thesection{\arabic{section}}
+\makeatother
+\renewenvironment{abstract}{%
+  \par\medskip\noindent\textbf{\abstractname}\quad\relax}{\par\medskip}
+\titleformat{\subsection}[hang]{\normalfont\bfseries}{\thesubsection.}{1em}{}
+
+\begin{document}
+
+\title{\vspace{0.5cm}\textbf{\titulo}}            % No modificar
+
+% PASO 6. Agregar aquí el nombre y código de los autores.  
+\author{
+Carlos Fernando Carreño Jerez - 2201729 \\
+Juan Esteban Pinto Orozco - 2215585
+}
+
+\affil{\small{Escuela de Ingenierías Eléctrica, Electrónica y de Telecomunicaciones} \\ % No modificar
+\small{Universidad Industrial de Santander}} % No modificar
+
+\date{\fecha}                       % No modificar
+
+\maketitle                          % No modificar
+\thispagestyle{fancy}               % No modificar
+
+%empieza el documento
+\section*{abstract}
+
+This report focuses on the analysis of transmission lines, this by means of a standard technique known as "time domain reflectometry", which allows to observe and examine the different effects (reflections) present in the line, in addition to calculating various parameters such as the length or the separation time between pulses (incident-reflected), on the other hand, this practice also stood out for its focus on the correct use of the instruments available in the laboratory, highlighting the spectrum analyser, with which it was possible to collect data to determine the attenuation present in a coaxial cable.
+
+\textit{\textbf{Palabras clave: }} Reflectometry, Transmission Line, Spectrum Analyser, Reflected waves. 
+\begin{abstract}
+El presente informe se focaliza en el análisis de las líneas de transmisión, esto por medio de una técnica estándar conocida como “reflectometría en el dominio del tiempo”, la cual permite observar y examinar los distintos efectos (reflexiones) presentes en línea, además de calcular diversos parámetros como la longitud o el tiempo de separación entre pulsos (incidente-reflejado), por otra parte, esta práctica también se destacó por su enfoque en el correcto uso de los instrumentos disponibles en el laboratorio, resaltando el analizador de espectro, con el cual se logró recabar datos para determinar la atenuación presente en un cable coaxial.
+    
+\textit{\textbf{Palabras clave: }} Reflectometría, Línea de Transmisión, Analizador de Espectro, Ondas reflejadas. 
+\end{abstract}
+
+\section{Introducción}
+
+En el ámbito de las comunicaciones electrónicas, la modulación desempeña un papel fundamental al permitir la transmisión de señales a través de diferentes medios. Entre las diversas técnicas de modulación, las modulaciones lineales son esenciales debido a su simplicidad y eficiencia en la transmisión de información. Este informe presenta un estudio detallado sobre las modulaciones lineales, centrándose en la creación de modelos para la envolvente compleja de modulaciones lineales específicas como la Modulación de Amplitud de Banda Lateral Única (AM-USB) y la Modulación de Amplitud en Cuadratura (QAM).
+
+El propósito principal de esta práctica es proporcionar una comprensión profunda de los principios y aplicaciones de las modulaciones lineales. Para ello, se han diseñado, analizado e implementado modelos mediante GNU Radio junto con los equipos disponibles en el laboratorio, los cuales permiten visualizar y comprender la dinámica de la envolvente compleja en estos sistemas de modulación. La envolvente compleja es una herramienta clave en el análisis de señales moduladas, ya que facilita la representación y manipulación de señales de alta frecuencia en términos de sus componentes de baja frecuencia.
+
+La Modulación de Amplitud de Banda Lateral Única (AM-USB) es una variante de la modulación AM que mejora la eficiencia del espectro al eliminar una de las bandas laterales y la portadora, permitiendo una transmisión más eficiente. Por otro lado, la Modulación de Amplitud en Cuadratura (QAM) combina dos señales moduladas en amplitud en fases ortogonales, proporcionando una mayor capacidad de transmisión de información y siendo ampliamente utilizada en sistemas de comunicación digital modernos.
+
+Este informe está estructurado de la siguiente manera: en primer lugar, se presenta una metodología con una descripción detallada de los procedimientos experimentales, seguido se presentan los resultados obtenidos en el laboratorio junto a sus debidos análisis de los modelos y simulaciones realizadas. Finalmente, se discuten las conclusiones 
+destacando las implicaciones prácticas y teóricas de las modulaciones lineales en la ingeniería.
+
+
+\section{Metodología}
+
+Para el desarrollo de este laboratorio se llevaron a cabo 2 fases metodológicas, correspondientes a la parte A y B de la practica en cuestión.
+\subsection*{Actividad previa a la práctica:}
+Para comenzar esta práctica de laboratorio, primeramente, se realizó un análisis a detalle del material suministrado por el docente, el cual se relaciona con los siguientes temas:
+
+Material Suministrado:
+\begin{itemize}
+    \item La comprensión de la modulación de amplitud \cite{Lacomprensióndelamodulacióndeamplitud}
+    \item Comprensión de la SSB o Banda lateral única\cite{ComprensiónSSBoBandalateralúnica}
+    
+\end{itemize}
+
+\subsection*{Parte A: Modulaciones Lineales (Modulación de Amplitud usando GNU Radio)}
+
+\begin{enumerate}
+    \item La primera parte de esta práctica se enfocó en la creación de diferentes modelos de envolvente compleja para un modulador AM (La envolvente compleja es una representación canónica en banda base de la señal pasa banda), esto por medio del software GNU Radio y una guía realizada por el docente Efrén Acevedo.\cite{EfrenAcevedo}
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras3/MTPA1.png}
+    \caption{Guía práctica para la parte A del laboratorio.}
+    \label{M1}
+    \end{figure}
+    \item Seguido al montaje, se procedió a determinar el índice de modulación en el dominio de la frecuencia para 3 casos diferentes (ka*Am = 1), (ka*Am > 1) y (ka*am < 1), para lo cual se calculo la potencia de la señal envolvente compleja, tanto por medio del software de GNU radio como en el analizador de espectro, esto con el fin de comparar estos valores y determinar “m” por medio de la siguiente ecuación:
+    \begin{center}
+        $N_{dB} = 20 log10 (m/2)$
+    \end{center}
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras3/MTPA2.png}
+    \caption{Esquema del análisis en frecuencia.}
+    \label{M2}
+    \end{figure}
+    También se resaltan los siguientes datos en cada caso: Potencia de la señal portadora, Potencia de la banda lateral superior, Potencia de la banda lateral inferior, Índice de modulación y Frecuencia del mensaje. 
+    
+    \item Posteriormente se procede a calcular nuevamente el índice de modulación para los 3 casos anteriores (ka*Am = 1), (ka*Am > 1) y (ka*am < 1), sin embargo, enfocándonos en el dominio temporal, para esto tendremos que considerar las características de la señal envolvente compleja g(t) (En el software GNU radio) y las amplitudes de la señal s(t) (medida en el osciloscopio). La ecuación para dicho calculo se ilustra a continuación:
+
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras3/MTPA3.png}
+    \caption{Esquema del análisis en el dominio del tiempo.}
+    \label{M2}
+    \end{figure}
+    
+    \item Procedemos a agregar como mensaje una señal de audio, sobre la cual analizaremos sus valores máximos, con el fin de sacar conclusiones de su comportamiento a partir del índice de modulación, en los momentos en que este supera el 150\% y cuando se encuentra por debajo del 100\%. Finalmente, usando la opción de demodulación MKR del analizador de espectro, identificaremos aproximadamente cuándo comienza a distorsionarse dicha señal.
+    
+    \item  Finalmente procedemos a realizar un análisis sobre una segunda envolvente, la envolvente compleja en modulador AM con Banda lateral Única (Single Side Band - SSB), a través de los siguientes escenarios:
+    \begin{itemize}
+        \item Medir en el analizador de espectro las características de la señal cuando el mensaje es un coseno.
+        \item Mida en el analizador de espectro las características de la señal cuando el mensaje es una señal cuadrada.
+        \item Mida en el osciloscopio las características de la señal cuando el mensaje es un coseno.
+        \item Mida en el osciloscopio las características de la señal cuando el mensaje es una señal cuadrada.
+        \item •	Inserte una señal de audio determine las características de la señal de audio modulada en banda lateral única en el osciloscopio y en el analizador de espectro con o sin portadora.¿es posible oír la señal en el analizador de espectro con la función MKR demodulación? ¿Bajo qué condiciones se logra demodular en el analizador de espectro?
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{Parte B: Modulaciones Lineales en Cuadratura.}
+Es una técnica que transporta dos señales independientes, mediante la modulación, tanto en amplitud como en fase de una señal portadora. Esto se consigue modulando una misma portadora, desfasada en 90°. La señal modulada en QAM está compuesta por la suma lineal de dos señales previamente moduladas en doble banda lateral con portadora suprimida.
+\cite{señalesindependientes}
+
+\begin{enumerate}
+    \item Implementamos la envolvente compleja en GNU radio partiendo del montaje suministrado en la guía, posterior a esto, realice el análisis en el dominio del tiempo de la señal s(t) (usando el osciloscopio) y frecuencia de la señal s(t) (usando el analizador de espectro). Describa las características de las señales observadas en cada uno de los equipos.
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.45\textwidth]{Figuras3/MTPB1.png}
+    \caption{GNU radio Modulación de amplitud en cuadratura.}
+    \label{M4}
+    \end{figure}
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.45\textwidth]{Figuras3/MTPB2.png}
+    \caption{Esquema para el análisis en tiempo y frecuencia.}
+    \label{M5}
+    \end{figure}
+    
+    \item Partiendo del montaje realizado anteriormente, resuelve las siguientes cuestiones:
+    \begin{itemize}
+        \item Describa las características en el dominio del tiempo que se observan en el osciloscopio de las señales m1(t) y m2(t). 
+        \item Describa las características en el dominio de la frecuencia que se observan en el analizador de espectro de las señales m1(t) y m2(t).
+        \item Mida la potencia total de la señal modulada y valide con las ecuaciones presentadas en la teoría.
+    \end{itemize}
+    
+    \item Finalmente concluimos la practica con un apartado de Diseño y análisis, enfocándonos en las siguientes premisas:
+
+    \begin{itemize}
+        \item Tome dos audios de prueba e ingréselos como señal m1(t) y m2(t). 
+        \begin{figure}[h]
+    \centering\includegraphics[width=0.45\textwidth]{Figuras3/MTPB3.png}
+    \caption{Esquema base para el apartado de Diseño.}
+    \label{M6}
+    \end{figure}
+        \item Mida las señales de salida s(t) en el osciloscopio y en el analizador de espectro. concluya al respecto (medida de ancho de banda y naturaleza de la señal) 
+        \item Cree un sistema donde pueda separar las dos señales y escucharlas por separado. Nota: transmita por el canal RX/TX y reciba por el canal RX2. Justifique su trabajo a través de un párrafo.
+    \end{itemize}
+\end{enumerate}
+
+\section{Resultados de la Practica}
+
+\subsection*{Parte A}
+\begin{enumerate}
+    \item   Realizamos la configuracion de GNU Radio segun como indicaba la guia que teniamos disponibles de modo que quedo de la siguiente manera:
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras3/PA11.png}
+    \caption{Visualización GNU Radio}
+    \label{PA11}
+    \end{figure}
+
+    \item   Para esta seccion empezamos mirando el comportamiento cuando Ka*am = 1 para le cual dajemos las dos variables establecidas en 1, dando el siguiente resulta:
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras3/PA21.jpg}
+    \caption{Visualización GNU Radio}
+    \label{PA11}
+    \end{figure}
+
+    Para el cual calculamos su potencia dando un valor de $10.05*10_{-6}$ [ watts ].
+    
+    Luego pasamos a mirar cuando Ka*am > 1 para lo cual se dejo quieto Ka y se cambio am a un valor correspondiente de 0.5 que permitio que fuera cierta la afirmacion, obteniendo el siguiente resultado.
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras3/PA22.jpg}
+    \caption{Visualización GNU Radio}
+    \label{PA11}
+    \end{figure}
+
+    El cual tambien se le realiza el calculo de su potencia dando $7.17*10_{-6}$ [ watts ].
+    
+    Finalmente se realizo la tercer afirmacion que la cual era Ka*am < 1 para el cual se dejo quieto am y se le asigno a ka el valor de 1.5 volviendo verdadera la afirmacion y dando el siguiente resultado.
+
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras3/PA23.jpg}
+    \caption{Visualización GNU Radio}
+    \label{PA11}
+    \end{figure}
+    
+    para el cual tambien se miro su potencia correspondiente dando un valor de $1.406*10_{-5}$ [ watts ].
+
+
+    
+\end{enumerate}
+
+\section{Resultados de la Practica 2}
+
+\subsection*{Parte A}
+\begin{enumerate}
+    \item Se realizo el montaje ilustrado en la fig \ref{M1}.
+    
+    \item  Configuración del generador de señales y ajuste del ciclo útil con ayuda del osciloscopio
+    
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras2/PA21.jpg}
+    \caption{Configuración del generador de señales.}
+    \label{PA21}
+    \end{figure}
+    
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras2/PA22.jpg}
+    \caption{Visualización de la señal generador-osciloscopio}
+    \label{PA22}
+    \end{figure}
+    
+    \item  inicio de la línea (canal 1), Final de la línea (Canal 2).
+
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.37\textwidth]{Figuras2/PA3.jpg}
+    \caption{Visualización de la señal canal1(inicio línea) - canal2(final línea).}
+    \label{PA3}
+    \end{figure}
+   \newpage
+    \item Medición del delta de tiempo entre la onda incidente y la onda reflejada. (línea abierta al final)
+
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.5\textwidth]{Figuras2/PA4.jpg}
+    \caption{Medición del Delta de tiempo entre onda incidente y reflejada}
+    \label{PA4}
+    \end{figure}
+
+    \item Cálculo de las dimensiones del cable coaxial.
+    
+Dimensiones Marcadas en el la Línea:
+\begin{center}
+    Inicio: 037172 [ft]
+    Final: 037312 [ft]
+    Longitud de la Línea (teórica) = Final - Inicio
+    Longitud de la Línea (teórica) = 140 [ft]
+    Longitud de la Línea (teórica) = 42.672 [m]
+\end{center}
+Ya que la línea se encuentra abierta, es decir la parte final no está llegando a una carga, este se puede considerar la distancia en la cual se presenta un defecto en la línea, por lo cual podemos verificar la distancia por medio de la siguiente ecuación:
+\begin{equation}
+    d=\frac{(Vp*td)}{2}
+\end{equation}
+Donde $V_{p}$ corresponde al 66\% de la constante de la velocidad de la luz ($3x10^{8}$ m/s), este dato fue obtenido a partir de un datasheet del cable (https://pdf1.alldatasheet.com/datasheet-pdf/view/96218/ETC/RG58U.html). En el caso de la variable td, esta corresponde al tiempo de separación entre el pulso incidente y el reflejado, el cual fue obtenido por medio del osciloscopio, tal como se ilustra en la fig \ref{PA4} (td =$\Delta$t = 430ns).
+
+De esta manera el valor de la línea sería igual a:
+\begin{equation}
+    d=\frac{(0.66*3x10^{8} m/s)*(430x10^{(-9)} s)}{2} = 42.57 [m]
+\end{equation}
+
+Valores muy próximos, ya que su margen de error es solo del 0.23%.
+
+    \item	Medición del delta de amplitud entre la onda incidente y la onda reflejada. (línea abierta al final) 
+       \newpage
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras2/PA4.jpg}
+    \caption{Medición del Delta de amplitud entre onda incidente y reflejada.}
+    \label{PA6}
+    \end{figure}
+    \begin{equation}
+        \Delta V = 97.66 [mV]
+    \end{equation}
+
+    \item  Amplitudes y delta de tiempo entre la onda incidente y la onda reflejada en presencia de un corto.
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras2/PA71.jpg}
+    \caption{Medición del Delta de tiempo entre onda incidente y reflejada en corto}
+    \label{PA71}
+    \end{figure}
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras2/PA72.jpg}
+    \caption{Medición del Delta de Amplitud entre onda incidente y reflejada en corto.}
+    \label{PA72}
+    \end{figure}
+    \begin{center}
+        $\Delta t = 478 [ns]$ \\
+        $\Delta V = 1.7286 [V]$
+    \end{center}
+    
+    \item  Amplitudes y delta de tiempo entre la onda incidente y la onda reflejada conectando la línea a una carga de 50 ohns.
+
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.45\textwidth]{Figuras2/PA81.jpg}
+    \caption{Medición del Delta de tiempo entre onda incidente y reflejada a una carga de 50 ohns}
+    \label{PA81}
+    \end{figure}
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.45\textwidth]{Figuras2/PA82.jpg}
+    \caption{Medición del Delta de Amplitud entre onda incidente y reflejada a una carga de 50 ohns}
+    \label{PA82}
+    \end{figure}
+    \begin{center}
+        $\Delta t = 444 [ns]$ \\
+        $\Delta V = 912.05 [mV]$
+    \end{center}
+\end{enumerate}
+
+\subsection*{Parte B}
+\begin{enumerate}
+    \item Se realiza el montaje en GNU radio.
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.45\textwidth]{Figuras2/PB1.png}
+    \caption{Montaje en GNU radio USRP como transmisor}
+    \label{PB1}
+    \end{figure}
+    \item Datos Obtenidos al cariar la frecuencia de transmisión. (se añaden algunas imágenes de evidencia de los datos recolectados por el osciloscopio).
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.45\textwidth]{Figuras2/PB2.png}
+    \caption{Amplitud leída en el osciloscopio al realizar variaciones en la frecuencia de transmisión}
+    \label{PB21}
+    \end{figure}
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.45\textwidth]{Figuras2/PB22.jpg}
+    \caption{Amplitud a Frecuencia 200MHz con Amplitud generada a 0.5.}
+    \label{PB22}
+    \end{figure}
+     \newpage
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras2/PB23.jpg}
+    \caption{Amplitud a Frecuencia 500MHz con Amplitud generada a 0.5}
+    \label{PB21}
+    \end{figure}
+    
+    \item RBW frente al nivel de ruido generado. (se añaden algunas imágenes de evidencia de los datos recolectados por el osciloscopio).
+      \newpage
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.3\textwidth]{Figuras2/PB31.png}
+    \caption{Nivel de ruido respecto al valor de RBW}
+    \label{PB31}
+    \end{figure}
+    
+   
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.4\textwidth]{Figuras2/PB32.jpg}
+    \caption{Nivel de Ruido con un BRW de 30KHz}
+    \label{PB32}
+    \end{figure}
+    
+    \item Ganancia del transmisor para cada valor de frecuencia de transmisión.
+
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.33\textwidth]{Figuras2/PB4.png}
+    \caption{Datos medidos}
+    \label{PB4}
+    \end{figure}
+    \newpage
+    \begin{figure}[h]
+    \centering\includegraphics[width=0.33\textwidth]{Figuras2/PB43.png}
+    \caption{Datos Resultado}
+    \label{PB43}
+    \end{figure}
+\end{enumerate}
+
+\section{Análisis de Resultados}
+\subsection*{Parte A}
+\textbf{Puntos 1  y 2.}
+
+Se realizó el montaje correctamente, tal y como se visualiza en la figura \ref{PA22}, logrando obtener las medidas especificadas para la señal rectangular según lo indicado en la guía.
+
+\textbf{Puntos 3}
+
+En esta parte, pudimos visualizar cómo era el comportamiento de la onda al final del circuito, siendo la gráfica de color verde en la figura \ref{PA3}. Podemos observar cómo es en amplitud la suma de la onda original y la onda reflejada. También podemos notar que la onda en el punto donde se crea la reflexión tiene una diferencia de tiempo igual a la mitad entre la onda original y la reflejada. Esto se debe a que ambas viajaban por un cable de una medida específica, y el final del cable era el punto de retorno de la onda reflejada, lo que ocasiona que la diferencia de tiempo entre ambas sea idéntica, ya que recorren el mismo camino. 
+
+\textbf{Puntos 4}
+
+Aquí logramos conocer cuál era la diferencia entre la onda de entrada y la onda reflejada, lo cual nos permite evaluar si pueden chocar entre sí, lo que podría causar problemas en la transmisión de la onda original. Este conocimiento es fundamental para prevenir posibles interferencias o distorsiones en la señal durante su envío.
+
+\textbf{Puntos 5}
+
+Al comprobar la dimensión del cable y conociendo la original, se pudo constatar que el fallo en la transmisión de la onda original, en caso de ocurrir, se estaría dando en la distancia esperada. Esto nos permitió obtener como resultado que pareciera que ocurriera un poco antes, pero dentro de un margen de error aceptable para el procedimiento.
+
+\textbf{Puntos 6,7,8}
+
+En estos tres puntos, se observó cómo era la onda reflejada al estar abierta, en corto y con una resistencia de 50 ohmios. Para esto, se realizó un análisis común que permitió examinar de manera más precisa sus comportamientos.
+
+En el punto 6, se visualizó que al estar abierto, la onda llegaba al final de la línea y se devolvía por el mismo camino, manteniendo su sentido y presentando algunas pérdidas que se asumen debido al cable, aunque no causaban cambios significativos en la onda reflejada.
+
+En el punto 7, al encontrarse en cortocircuito, se observó que la onda se invertía y presentaba un mayor nivel de pérdidas debido al cortocircuito presente, lo que ilustra cómo múltiples ondas podrían afectar la amplitud de las siguientes.
+
+En el punto 8, al añadir una resistencia, se notó que esta consumía gran parte de la onda, provocando que la onda reflejada no fuera muy pronunciada. Esto sugiere que mediante la implementación de resistencias que disipen el exceso de energía en forma de calor, se puede lograr una transmisión efectiva de ondas.
+
+En conclusión, en estos tres puntos se visualizan los tres casos más básicos que pueden ocurrir al implementar una línea de transmisión en las comunicaciones. Desde el mejor caso, que sería la resistencia que evita la reflexión de la onda, hasta el peor caso, que sería el cortocircuito causante de pérdidas en las demás ondas que se estén transmitiendo.
+
+\subsection*{Parte B}
+\textbf{Puntos 1 }
+En esta primera parte, pudimos observar que por medio del software de GNU Radio, somos capaces de implementar un generador de señal, el cual usa como medio de transmisión el SDRde modo que pudiéramos enviar desde el computador, al ejecutar el esquema planteado, una señal discreta llegando al SDR como una señal real
+
+\textbf{Puntos 2}
+En esta parte, estuvimos variando la amplitud en el programa y observamos los resultados en el osciloscopio a diferentes frecuencias. Pudimos notar que, aunque modificáramos la amplitud considerablemente en el programa, al pasar por el SDR y llegar al osciloscopio, los cambios se minimizaban debido a las pérdidas que ocurrían. Esto nos indica que, en el proceso de enviar información de un punto a otro, cuanto mayor sea la distancia, mayores pérdidas tenderá a tener.
+
+\textbf{Puntos 3}
+
+En esta parte, al haber estado variando el RBW, pudimos visualizar su funcionamiento. Notamos que a menor frecuencia, el RBW es más sensible a las diferencias entre las señales, mientras que a mayor frecuencia, presenta un tipo de desenfoque, lo que puede hacer que interprete varias ondas como una sola. Esto se puede comprobar al visualizar el ruido, ya que a medida que aumenta la frecuencia, este disminuye, debido a que el equipo pierde la capacidad de distinguir entre las diferentes ondas.
+
+Por otro lado, también se concluyó que su comportamiento sería de una forma lineal, lo que sugiere que podría ser posible calcular una ecuación que describa su comportamiento para posibles aplicaciones. Esto es importante porque proporcionaría una herramienta matemática para predecir y modelar el comportamiento del RBW en diferentes situaciones, lo que podría ser útil en el diseño y la optimización de sistemas de medición y análisis de señales.
+
+\textbf{Puntos 4}
+
+A medida que aumenta la frecuencia en un cable coaxial, la potencia de transmisión tiende a disminuir debido a la mayor pérdida de señal por efectos como la atenuación y la dispersión. Esto se debe a que a frecuencias más altas, aumentan las pérdidas por efectos resistivos y dieléctricos en el cable, lo que reduce la eficiencia de transmisión \cite{Líneadetransmisión}.
+La relación de onda estacionaria (VSWR) también tiende a aumentar con la frecuencia, lo que indica una mayor reflexión de la señal y, por lo tanto, una menor potencia transmitida efectivamente \cite{CableCoaxial}.
+
+De los graficos y tablas podemos concluir que, teniendo una atenuacion constante de 30dB, a medida que la frecuencia de la señal aumenta, esta atenuacion no varia, pero si impacta mas en la linea, ya que como describimos anteriormente, el aumento en la frecuencia de la señal los efectos de la atenuacion son mayores, haciendo decaer la potencia de señal recibida de forma exponencial, tal y como podemos ver en los graficos.
+
+\begin{figure}[h]
+    \centering\includegraphics[width=0.33\textwidth]{Figuras2/PB41.png}
+    \caption{Grafico}
+    \label{PB41}
+    \end{figure}
+\begin{figure}[h]
+    \centering\includegraphics[width=0.33\textwidth]{Figuras2/PB42.png}
+    \caption{Grafico}
+    \label{PB42}
+    \end{figure}
+
+\section{Conclusiones}
+\begin{itemize}
+
+\item Se logro adquirir nuevos conocimientos sobre la deteción de fallas y análisis sobre una línea de transmision, esto a travez del análisis por reflectometría en el dominio del tiempo, técnica que nos permitió encontrar diversos parametros como la distancia en la que se presentan defectos en la línea, tiempos de propagación, comportamiento en la señal, entre otros.
+\item Por medio de esta practica se fortalecio las habilidades practicas sobre el manejo de la instrumentación disponible en el laboratorio, a travez de la toma de datos y calibración de estos para la correcta realización del laboratorio.
+\item Se analizo el comportamiento que sigue una señal transmitida cuando se presentan diversas fallas en la línea, como el caso de un corto en esta, donde la señal se reflejaba e invertida por esta, disminuyendo asi su amplitud, en el caso de estar abierto esta se reflejaba pero no se invertia la señal, finalmente al entrar en contacto con una carga, la señal reflejada era menor, ya que gran parte de la señal enviada era “recibida” por la carga, disminuyendo asi en gran medida las perdidas o retorno de la señal.
+\item Fue posible determinar la distancia donde se presenta la falla en la línea por medio de una análisis matemático y experimental (recabando datos de la señal por medio del osciloscopio), donde se pudo concluir que ambos métodos son correctos para determinar la posición donde se genero el defecto, ya que como se vio en el apartado de resultados, estos dos métodos presentan un margen de error de solo del 0.23\% entre si, lo cual podemos considerar despreciable en este tipo de análisis.
+\item Se analizo el comportamiento de RBW (Resolución de Ancho de Banda) contratándolo con le ruido presente en la señal, esto por medio del analizador de espectros, llegando a la conclusión de que el RBW es una medida del aanlizador de espectro que permite distinguir las frecuencias entre distintas señales, tomando cierto rango de frecuencias como un solo componente, por esto cuanto se aumenta el RBW la señal de ruido disminuye, por le caso contrario al disminuir el RBW se mejora la sensibilidad con la que el analizador de espectro distingue entre señales, permitiendo asi una detección de señales mas débiles.
+
+\item Haber analizado la atenuación presente en un cable coaxial nos permite revelar patrones de comportamiento importantes para la transmisión de señales a lo largo de distancias variables y en diferentes frecuencias.
+
+\end{itemize}
+
+\bibliographystyle{IEEEtran}
+\bibliography{Referencias}
+
+\end{document}
